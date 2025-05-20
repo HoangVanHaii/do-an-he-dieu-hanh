@@ -52,10 +52,11 @@ namespace CPUSchedulerProject {
         {
             string algorithm = AlorithmCombo.SelectedItem?.ToString();
             List<Process> processList = new List<Process>();
+
             try
             {
-                int row = int.Parse(numProcess.Text);
-                for (int i = 0; i < row; i++)
+                int rowCount = int.Parse(numProcess.Text);
+                for (int i = 0; i < rowCount; i++)
                 {
                     int arrivalTime = int.Parse(JobPool.Rows[i].Cells[0].Value.ToString());
                     int burstTime = int.Parse(JobPool.Rows[i].Cells[1].Value.ToString());
@@ -63,32 +64,38 @@ namespace CPUSchedulerProject {
                     {
                         ID = i + 1,
                         ArrivalTime = arrivalTime,
-                        BurstTime = burstTime,
-                        IsCompleted = false
-
+                        BurstTime = burstTime
                     };
+
                     processList.Add(process);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Lỗi dữ liệu đầu vào: " + ex.Message);
+                return;
             }
-            //if (algorithm == "FCFS")
-            //{
-                FCFS schduler = new FCFS();
-            Process nextProcess = schduler.GetNextProcess(processList, 3);
 
-            if (nextProcess != null)
+            if (algorithm == "FCFS")
             {
-                // Hiển thị thông tin tiến trình được chọn
-                MessageBox.Show("Đang chạy tiến trình ID: " + nextProcess.ID);
+                FCFS scheduler = new FCFS();
+                double avgWait, avgTat;
+
+                var resultList = scheduler.Run(processList, out avgWait, out avgTat);
+
+                // Hiển thị kết quả trong DataGridView mới hoặc hiện tại
+                string result = "";
+                foreach (var p in resultList)
+                {
+                    result += $"ID: {p.ID}, Arrival: {p.ArrivalTime}, Burst: {p.BurstTime}, " +
+                              $"Start: {p.StartTime}, Finish: {p.FinishTime}, " +
+                              $"Wait: {p.WaitTime}, Turnaround: {p.TurnaroundTime}\n";
+                }
+                MessageBox.Show(result, "Tất cả tiến trình");
+
+                MessageBox.Show($"Thời gian chờ trung bình: {avgWait:F2}\nThời gian hoàn thành trung bình: {avgTat:F2}", "Kết quả FCFS");
             }
-            else
-            {
-                MessageBox.Show("Không còn tiến trình nào để chạy.");
-            }
-            //}
         }
+
     }
 }

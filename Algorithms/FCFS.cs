@@ -1,54 +1,37 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
-using Data; // Ch?a class Process
+using Data;
 
 namespace Algorithms
 {
-    public class FCFS 
+    public class FCFS
     {
-        private Queue<Process> queue = new Queue<Process>();
-
-        public void Reset()
+        public List<Process> Run(List<Process> processes, out double avgWaitTime, out double avgTurnaroundTime)
         {
-            queue.Clear();
-        }
+            var sorted = processes.OrderBy(p => p.ArrivalTime).ThenBy(p => p.ID).ToList();
+            int currentTime = 0;
 
-        public Process GetNextProcess(List<Process> readyQueue, int currentTime)
-        {
-            // N?u hàng ??i r?ng thì n?p ti?n trình vào theo th? t? ??n
-            if (queue.Count == 0)
+            foreach (var process in sorted)
             {
-                var sorted = readyQueue
-                    .Where(p => !p.IsCompleted && p.ArrivalTime <= currentTime)
-                    .OrderBy(p => p.ArrivalTime)
-                    .ThenBy(p => p.ID)
-                    .ToList();
+                if (currentTime < process.ArrivalTime)
+                    currentTime = process.ArrivalTime;
 
-                foreach (var process in sorted)
-                {
-                    if (!queue.Contains(process))
-                        queue.Enqueue(process);
-                }
+                process.StartTime = currentTime;
+                process.WaitTime = currentTime - process.ArrivalTime;
+
+                currentTime += process.BurstTime;
+
+                process.FinishTime = currentTime;
+                process.TurnaroundTime = process.FinishTime - process.ArrivalTime;
+
+                process.IsCompleted = true;
             }
 
-            // L?y ti?n trình ??u tiên (n?u có)
-            while (queue.Count > 0)
-            {
-                var p = queue.Peek();
-                if (p.IsCompleted)
-                {
-                    MessageBox.Show("finissh: " + p.ID.ToString());
+            avgWaitTime = sorted.Average(p => p.WaitTime);
+            avgTurnaroundTime = sorted.Average(p => p.TurnaroundTime);
 
-                    queue.Dequeue(); // B? ti?n trình ?ã xong
-                    continue;
-                }
-                MessageBox.Show("Process ID: " + p.ID.ToString());
-                return p;
-            }
-
-            return null;
+            return sorted;
         }
     }
 }
