@@ -86,20 +86,16 @@ namespace CPUSchedulerProject
                 FCFS scheduler = new FCFS();
                 resultList = scheduler.Run(processList, out avgWaitTime, out avgTurnaroundTime);
 
-                string result = "";
-                foreach (var p in resultList)
-                {
-                    result += $"ID: {p.ID}, Arrival: {p.ArrivalTime}, Burst: {p.BurstTime}, " +
-                              $"Start: {p.StartTime}, Finish: {p.FinishTime}, " +
-                              $"Wait: {p.WaitTime}, Turnaround: {p.TurnaroundTime}\n";
-                }
+                //string result = "";
+                //foreach (var p in resultList)
+                //{
+                //    result += $"ID: {p.ID}, Arrival: {p.ArrivalTime}, Burst: {p.BurstTime}, " +
+                //              $"Start: {p.StartTime}, Finish: {p.FinishTime}, " +
+                //              $"Wait: {p.WaitTime}, Turnaround: {p.TurnaroundTime}\n";
+                //}
 
-                //MessageBox.Show(result, "Tất cả tiến trình");
-                //MessageBox.Show($"Thời gian chờ trung bình: {avgWaitTime:F2}\nThời gian hoàn thành trung bình: {avgTurnaroundTime:F2}", "Kết quả FCFS");
-
-                // Kích hoạt panel2 vẽ lại
-                await DrawGanttChart();
                 await DrawQueueAsync();
+                await DrawGanttChart();
             }
         }
 
@@ -134,7 +130,6 @@ namespace CPUSchedulerProject
                     // Vẽ ID tiến trình
                     g.DrawString("P" + process.ID.ToString(), this.Font, Brushes.White, x + 3, 15);
                     x += unitWidth + spacing;
-                    await Task.Delay(150);
                 }
             }
         }
