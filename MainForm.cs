@@ -19,10 +19,15 @@ namespace CPUSchedulerProject {
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            
         }
 
         private void panel6_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void numProcess_TextChanged(object sender, EventArgs e)
         {
 
         }
