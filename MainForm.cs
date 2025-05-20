@@ -1,4 +1,4 @@
-using Algorithms;
+﻿using Algorithms;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -74,11 +74,21 @@ namespace CPUSchedulerProject {
             {
                 MessageBox.Show(ex.Message);
             }
-            if (algorithm == "FCFS")
-            {
+            //if (algorithm == "FCFS")
+            //{
                 FCFS schduler = new FCFS();
-                schduler.GetNextProcess(processList, 2);
+            Process nextProcess = schduler.GetNextProcess(processList, 3);
+
+            if (nextProcess != null)
+            {
+                // Hiển thị thông tin tiến trình được chọn
+                MessageBox.Show("Đang chạy tiến trình ID: " + nextProcess.ID);
             }
+            else
+            {
+                MessageBox.Show("Không còn tiến trình nào để chạy.");
+            }
+            //}
         }
     }
 }

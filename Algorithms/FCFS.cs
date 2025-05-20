@@ -39,6 +39,8 @@ namespace Algorithms
                 var p = queue.Peek();
                 if (p.IsCompleted)
                 {
+                    MessageBox.Show("finissh: " + p.ID.ToString());
+
                     queue.Dequeue(); // B? ti?n trình ?ã xong
                     continue;
                 }
