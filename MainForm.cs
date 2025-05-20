@@ -50,7 +50,7 @@ namespace CPUSchedulerProject {
 
         private void button1_Click(object sender, EventArgs e)
         {
-            FCFS schduler = new FCFS();
+            string algorithm = AlorithmCombo.SelectedItem?.ToString();
             List<Process> processList = new List<Process>();
             try
             {
@@ -67,7 +67,6 @@ namespace CPUSchedulerProject {
                         IsCompleted = false
 
                     };
-                    MessageBox.Show(process.ID.ToString());
                     processList.Add(process);
                 }
             }
@@ -75,9 +74,11 @@ namespace CPUSchedulerProject {
             {
                 MessageBox.Show(ex.Message);
             }
-
-
-            schduler.GetNextProcess(processList, 2);
+            if (algorithm == "FCFS")
+            {
+                FCFS schduler = new FCFS();
+                schduler.GetNextProcess(processList, 2);
+            }
         }
     }
 }

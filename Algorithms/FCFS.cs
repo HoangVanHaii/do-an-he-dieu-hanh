@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using Data; // Ch?a class Process
 
 namespace Algorithms
@@ -41,7 +42,7 @@ namespace Algorithms
                     queue.Dequeue(); // B? ti?n trình ?ã xong
                     continue;
                 }
-
+                MessageBox.Show("Process ID: " + p.ID.ToString());
                 return p;
             }
 
