@@ -84,7 +84,7 @@ namespace CPUSchedulerProject
             if (algorithm == "FCFS")
             {
                 FCFS scheduler = new FCFS();
-                resultList = scheduler.Run(processList, out avgWaitTime, out avgTurnaroundTime);
+                var (tmp, avgWait, avgTurnaround) = await scheduler.RunAsync(processList, panel2, panel7);
 
                 //string result = "";
                 //foreach (var p in resultList)
@@ -93,80 +93,9 @@ namespace CPUSchedulerProject
                 //              $"Start: {p.StartTime}, Finish: {p.FinishTime}, " +
                 //              $"Wait: {p.WaitTime}, Turnaround: {p.TurnaroundTime}\n";
                 //}
-
-                await DrawQueueAsync();
-                await DrawGanttChart();
-            }
-        }
-
-        private async Task DrawGanttChart()
-        {
-            if (resultList == null || resultList.Count == 0)
-                return;
-
-            Graphics g = panel2.CreateGraphics();
-            g.Clear(panel2.BackColor);
-            int unitWidth = 10; // Mỗi đơn vị thời gian = 20 pixel
-            int height = 70;
-            int x = 50;
-            int y = panel2.Height / 3;
-            int spacing = 1;
-
-            foreach (var process in resultList)
-            {
-                for (int i = 0; i < process.BurstTime; i++)
-                {
-                    // Chọn màu theo ID (tuỳ chỉnh)
-                    Color color = Color.Red;
-                    if (process.ID == 2) color = Color.DarkGray;
-                    if (process.ID == 3) color = Color.Black;
-                    if (process.ID == 4) color = Color.BlueViolet;
-                    if (process.ID == 5) color = Color.Green;
-
-                    Brush brush = new SolidBrush(color);
-                    Rectangle rect = new Rectangle(x, y, unitWidth, height);
-                    g.FillRectangle(brush, rect);
-
-                    // Vẽ ID tiến trình
-                    g.DrawString("P" + process.ID.ToString(), this.Font, Brushes.White, x + 3, 15);
-                    x += unitWidth + spacing;
-                }
-            }
-        }
-        private async Task DrawQueueAsync()
-        {
-            if (resultList == null || resultList.Count == 0)
-                return;
-
-            Graphics g = panel7.CreateGraphics();
-            g.Clear(panel7.BackColor);
-            int unitWidth = 10; // Mỗi đơn vị thời gian = 10 pixel
-            int height = 50;
-            int x = 50;
-            int y = panel7.Height / 3;
-            int spacing = 1;
-
-            foreach (var process in resultList)
-            {
-                for (int i = 0; i < process.BurstTime; i++)
-                {
-                    // Chọn màu theo ID
-                    Color color = Color.Red;
-                    if (process.ID == 2) color = Color.DarkGray;
-                    if (process.ID == 3) color = Color.Black;
-                    if (process.ID == 4) color = Color.BlueViolet;
-                    if (process.ID == 5) color = Color.Green;
-
-                    Brush brush = new SolidBrush(color);
-                    Rectangle rect = new Rectangle(x, y, unitWidth, height);
-                    g.FillRectangle(brush, rect);
-
-                    // Vẽ ID tiến trình
-                    g.DrawString("P" + process.ID.ToString(), this.Font, Brushes.White, x + 2, y + 15);
-
-                    x += unitWidth + spacing;
-                    await Task.Delay(150);
-                }
+                //resultList = tmp;
+                //await  DrawQueueAsync();
+                //await DrawGanttChart();
             }
         }
 
