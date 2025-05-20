@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CPUSchedulerProject")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7f45167d200c77829b1efd5d7ed38876c645188e")]
 [assembly: System.Reflection.AssemblyProductAttribute("CPUSchedulerProject")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CPUSchedulerProject")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
