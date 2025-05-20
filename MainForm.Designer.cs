@@ -207,6 +207,7 @@ namespace CPUSchedulerProject {
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1090, 210);
             this.panel2.TabIndex = 1;
+            //this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // label10
             // 
@@ -384,6 +385,7 @@ namespace CPUSchedulerProject {
             this.Controls.Add(this.panel1);
             this.Name = "MainForm";
             this.Text = "CPU Scheduler";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();

@@ -3,22 +3,28 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Data;
+using System.Drawing;
+using System.Threading.Tasks;
 
-namespace CPUSchedulerProject {
-    public partial class MainForm : Form {
-        public MainForm() {
+namespace CPUSchedulerProject
+{
+    public partial class MainForm : Form
+    {
+        public MainForm()
+        {
             InitializeComponent();
-        }
-
-        private void panel4_Paint(object sender, PaintEventArgs e)
-        {
 
         }
 
-        private void label5_Click(object sender, EventArgs e)
-        {
+        // Biến toàn cục
+        List<Process> processList = new List<Process>();
+        List<Process> resultList = new List<Process>();
+        double avgWaitTime = 0;
+        double avgTurnaroundTime = 0;
 
-        }
+        private void panel4_Paint(object sender, PaintEventArgs e) { }
+
+        private void label5_Click(object sender, EventArgs e) { }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -27,10 +33,7 @@ namespace CPUSchedulerProject {
             MessageBox.Show(rows.ToString());
         }
 
-        private void panel6_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+        private void panel6_Paint(object sender, PaintEventArgs e) { }
 
         private void numProcess_TextChanged(object sender, EventArgs e)
         {
@@ -39,7 +42,7 @@ namespace CPUSchedulerProject {
             {
                 JobPool.Rows.Clear();
                 int row = int.Parse(inp);
-                for(int i = 0; i< row; i++)
+                for (int i = 0; i < row; i++)
                 {
                     JobPool.Rows.Add();
                     JobPool.Rows[i].HeaderCell.Value = "P" + (i + 1).ToString();
@@ -48,10 +51,11 @@ namespace CPUSchedulerProject {
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             string algorithm = AlorithmCombo.SelectedItem?.ToString();
-            List<Process> processList = new List<Process>();
+            processList.Clear();
+            resultList.Clear();
 
             try
             {
@@ -60,6 +64,7 @@ namespace CPUSchedulerProject {
                 {
                     int arrivalTime = int.Parse(JobPool.Rows[i].Cells[0].Value.ToString());
                     int burstTime = int.Parse(JobPool.Rows[i].Cells[1].Value.ToString());
+
                     Process process = new Process
                     {
                         ID = i + 1,
@@ -79,11 +84,8 @@ namespace CPUSchedulerProject {
             if (algorithm == "FCFS")
             {
                 FCFS scheduler = new FCFS();
-                double avgWait, avgTat;
+                resultList = scheduler.Run(processList, out avgWaitTime, out avgTurnaroundTime);
 
-                var resultList = scheduler.Run(processList, out avgWait, out avgTat);
-
-                // Hiển thị kết quả trong DataGridView mới hoặc hiện tại
                 string result = "";
                 foreach (var p in resultList)
                 {
@@ -91,11 +93,91 @@ namespace CPUSchedulerProject {
                               $"Start: {p.StartTime}, Finish: {p.FinishTime}, " +
                               $"Wait: {p.WaitTime}, Turnaround: {p.TurnaroundTime}\n";
                 }
-                MessageBox.Show(result, "Tất cả tiến trình");
 
-                MessageBox.Show($"Thời gian chờ trung bình: {avgWait:F2}\nThời gian hoàn thành trung bình: {avgTat:F2}", "Kết quả FCFS");
+                //MessageBox.Show(result, "Tất cả tiến trình");
+                //MessageBox.Show($"Thời gian chờ trung bình: {avgWaitTime:F2}\nThời gian hoàn thành trung bình: {avgTurnaroundTime:F2}", "Kết quả FCFS");
+
+                // Kích hoạt panel2 vẽ lại
+                await DrawGanttChart();
+                await DrawQueueAsync();
             }
         }
 
+        private async Task DrawGanttChart()
+        {
+            if (resultList == null || resultList.Count == 0)
+                return;
+
+            Graphics g = panel2.CreateGraphics();
+            g.Clear(panel2.BackColor);
+            int unitWidth = 10; // Mỗi đơn vị thời gian = 20 pixel
+            int height = 70;
+            int x = 50;
+            int y = panel2.Height / 3;
+            int spacing = 1;
+
+            foreach (var process in resultList)
+            {
+                for (int i = 0; i < process.BurstTime; i++)
+                {
+                    // Chọn màu theo ID (tuỳ chỉnh)
+                    Color color = Color.Red;
+                    if (process.ID == 2) color = Color.DarkGray;
+                    if (process.ID == 3) color = Color.Black;
+                    if (process.ID == 4) color = Color.BlueViolet;
+                    if (process.ID == 5) color = Color.Green;
+
+                    Brush brush = new SolidBrush(color);
+                    Rectangle rect = new Rectangle(x, y, unitWidth, height);
+                    g.FillRectangle(brush, rect);
+
+                    // Vẽ ID tiến trình
+                    g.DrawString("P" + process.ID.ToString(), this.Font, Brushes.White, x + 3, 15);
+                    x += unitWidth + spacing;
+                    await Task.Delay(150);
+                }
+            }
+        }
+        private async Task DrawQueueAsync()
+        {
+            if (resultList == null || resultList.Count == 0)
+                return;
+
+            Graphics g = panel7.CreateGraphics();
+            g.Clear(panel7.BackColor);
+            int unitWidth = 10; // Mỗi đơn vị thời gian = 10 pixel
+            int height = 50;
+            int x = 50;
+            int y = panel7.Height / 3;
+            int spacing = 1;
+
+            foreach (var process in resultList)
+            {
+                for (int i = 0; i < process.BurstTime; i++)
+                {
+                    // Chọn màu theo ID
+                    Color color = Color.Red;
+                    if (process.ID == 2) color = Color.DarkGray;
+                    if (process.ID == 3) color = Color.Black;
+                    if (process.ID == 4) color = Color.BlueViolet;
+                    if (process.ID == 5) color = Color.Green;
+
+                    Brush brush = new SolidBrush(color);
+                    Rectangle rect = new Rectangle(x, y, unitWidth, height);
+                    g.FillRectangle(brush, rect);
+
+                    // Vẽ ID tiến trình
+                    g.DrawString("P" + process.ID.ToString(), this.Font, Brushes.White, x + 2, y + 15);
+
+                    x += unitWidth + spacing;
+                    await Task.Delay(150);
+                }
+            }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            AlorithmCombo.SelectedIndex = 0; // Chọn thuật toán đầu tiên
+        }
     }
 }
