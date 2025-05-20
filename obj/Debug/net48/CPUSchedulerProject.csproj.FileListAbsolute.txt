@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\Hoang Hai\source\CPUSchedulerProject\CPUSchedulerProject_Fx48_Full\bin\Debug\net48\CPUSchedulerProject.exe.config
 C:\Users\Hoang Hai\source\CPUSchedulerProject\CPUSchedulerProject_Fx48_Full\bin\Debug\net48\CPUSchedulerProject.exe
 C:\Users\Hoang Hai\source\CPUSchedulerProject\CPUSchedulerProject_Fx48_Full\bin\Debug\net48\CPUSchedulerProject.pdb
@@ -9,3 +10,18 @@ C:\Users\Hoang Hai\source\CPUSchedulerProject\CPUSchedulerProject_Fx48_Full\obj\
 C:\Users\Hoang Hai\source\CPUSchedulerProject\CPUSchedulerProject_Fx48_Full\obj\Debug\net48\CPUSchedulerProject.sourcelink.json
 C:\Users\Hoang Hai\source\CPUSchedulerProject\CPUSchedulerProject_Fx48_Full\obj\Debug\net48\CPUSchedulerProject.exe
 C:\Users\Hoang Hai\source\CPUSchedulerProject\CPUSchedulerProject_Fx48_Full\obj\Debug\net48\CPUSchedulerProject.pdb
+=======
+C:\Users\Administrator\do-an-he-dieu-hanh\bin\Debug\net48\CPUSchedulerProject.exe.config
+C:\Users\Administrator\do-an-he-dieu-hanh\bin\Debug\net48\CPUSchedulerProject.exe
+C:\Users\Administrator\do-an-he-dieu-hanh\bin\Debug\net48\CPUSchedulerProject.pdb
+C:\Users\Administrator\do-an-he-dieu-hanh\obj\Debug\net48\CPUSchedulerProject.csproj.AssemblyReference.cache
+C:\Users\Administrator\do-an-he-dieu-hanh\obj\Debug\net48\CPUSchedulerProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\do-an-he-dieu-hanh\obj\Debug\net48\CPUSchedulerProject.AssemblyInfoInputs.cache
+C:\Users\Administrator\do-an-he-dieu-hanh\obj\Debug\net48\CPUSchedulerProject.AssemblyInfo.cs
+C:\Users\Administrator\do-an-he-dieu-hanh\obj\Debug\net48\CPUSchedulerProject.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\do-an-he-dieu-hanh\obj\Debug\net48\CPUSchedulerProject.sourcelink.json
+C:\Users\Administrator\do-an-he-dieu-hanh\obj\Debug\net48\CPUSchedulerProject.exe
+C:\Users\Administrator\do-an-he-dieu-hanh\obj\Debug\net48\CPUSchedulerProject.pdb
+C:\Users\Administrator\do-an-he-dieu-hanh\obj\Debug\net48\CPUSchedulerProject.MainForm.resources
+C:\Users\Administrator\do-an-he-dieu-hanh\obj\Debug\net48\CPUSchedulerProject.csproj.GenerateResource.cache
+>>>>>>> 44594458339416ce27655528e81f4010b5dc14cd
