@@ -1,5 +1,8 @@
+using Algorithms;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using Data;
 
 namespace CPUSchedulerProject {
     public partial class MainForm : Form {
@@ -39,9 +42,42 @@ namespace CPUSchedulerProject {
                 for(int i = 0; i< row; i++)
                 {
                     JobPool.Rows.Add();
+                    JobPool.Rows[i].HeaderCell.Value = "P" + (i + 1).ToString();
                 }
                 JobPool.Invalidate();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FCFS schduler = new FCFS();
+            List<Process> processList = new List<Process>();
+            try
+            {
+                int row = int.Parse(numProcess.Text);
+                for (int i = 0; i < row; i++)
+                {
+                    int arrivalTime = int.Parse(JobPool.Rows[i].Cells[0].Value.ToString());
+                    int burstTime = int.Parse(JobPool.Rows[i].Cells[1].Value.ToString());
+                    Process process = new Process
+                    {
+                        ID = i + 1,
+                        ArrivalTime = arrivalTime,
+                        BurstTime = burstTime,
+                        IsCompleted = false
+
+                    };
+                    MessageBox.Show(process.ID.ToString());
+                    processList.Add(process);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+
+            schduler.GetNextProcess(processList, 2);
         }
     }
 }
