@@ -19,7 +19,9 @@ namespace CPUSchedulerProject {
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+            JobPool.Invalidate();
+            int rows = int.Parse(numProcess.Text);
+            MessageBox.Show(rows.ToString());
         }
 
         private void panel6_Paint(object sender, PaintEventArgs e)
@@ -29,7 +31,17 @@ namespace CPUSchedulerProject {
 
         private void numProcess_TextChanged(object sender, EventArgs e)
         {
-
+            string inp = numProcess.Text;
+            if (!string.IsNullOrWhiteSpace(inp))
+            {
+                JobPool.Rows.Clear();
+                int row = int.Parse(inp);
+                for(int i = 0; i< row; i++)
+                {
+                    JobPool.Rows.Add();
+                }
+                JobPool.Invalidate();
+            }
         }
     }
 }
