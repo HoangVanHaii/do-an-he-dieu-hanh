@@ -1,0 +1,10 @@
+bin/
+obj/
+.vs/
+*.exe
+*.pdb
+*.cache
+*.json
+*.sourcelink.json
+*.nuget.cache
+*.csproj.FileListAbsolute.txt
